@@ -1,8 +1,0 @@
-{
-     "auths": {
-          "https://index.docker.io/v1/": {
-               "auth": "bW9zaGUxMDE6bFpWT3JmTmE=", 
-               "email": "moshe@egis-software.com"
-          }
-     }
-}

@@ -110,13 +110,6 @@
       tags:
         - docker
 
-    - name: copy config.json to ~/.docker directory
-      copy:
-        src: docker/config.json
-        dest: /root/.docker/config.json 
-      tags:
-        - docker
-
     - name: install python packages for docker
       package: 
         name: "{{ item }}"

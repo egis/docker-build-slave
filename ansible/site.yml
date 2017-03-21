@@ -1,0 +1,172 @@
+- hosts:  all
+  become: yes
+
+  vars:
+    node_ver: '6'
+
+  tasks:
+
+    - name: add gradle ppa
+      apt_repository: 
+        repo: 'ppa:cwchien/gradle'
+        update_cache: yes
+      tags:
+        - gradle
+
+    - name: install gradle
+      package: 
+        name: gradle 
+        state: present
+      tags:
+        - gradle
+
+    - name: install node repo
+      shell: curl -sL https://deb.nodesource.com/setup_{{ node_ver }}.x | sudo -E bash -
+      tags: 
+        - node
+   
+    - name: install nodejs
+      package: 
+        name: nodejs 
+        state: present
+      tags: 
+         - node
+
+    - name: Install node.js packages globally
+      npm:
+        name: "{{ item }}"
+        global: yes
+      tags:
+        - node
+      with_items:
+        - node-gyp
+        - webdriver-manager
+
+    - name: install glue-sprite
+      package: 
+        name: glue-sprite 
+        state: present
+      tags:
+        - glue
+
+    - name: install packages for glue-sprite
+      package: 
+        name: "{{ item }}"
+        state: present
+      tags:
+        - glue
+      with_items:
+        - python-dev
+        - python-setuptools
+        - python-pip
+        - python3-dev
+        - python3-setuptools
+        - python3-pip
+
+    - name: install pip packages for glue-sprite
+      shell: pip install --upgrade pip; pip install glue; pip3 install --upgrade pip; pip3 install glue
+      tags:
+        - glue
+
+    - name: install packages for docker
+      package:
+        name: "{{ item }}"
+        state: present
+      tags:
+        - docker
+      with_items:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+
+    - name: add docker apt key
+      apt_key:
+        url: "https://download.docker.com/linux/ubuntu/gpg"
+        state: present
+      tags:
+        - docker
+
+    - name: add docker apt repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        state: present
+        filename: 'docker-stable'
+        update_cache: yes
+      tags:
+        - docker
+
+    - name: install docker
+      package:
+        name: docker-ce
+        state: present
+      tags:
+        - docker
+
+    - name: make sure ~/.docker directory is present
+      file:
+        path: /root/.docker
+        state: directory
+      tags:
+        - docker
+
+    - name: copy config.json to ~/.docker directory
+      copy:
+        src: docker/config.json
+        dest: /root/.docker/config.json 
+      tags:
+        - docker
+
+    - name: install python packages for docker
+      package: 
+        name: "{{ item }}"
+        state: installed
+      tags:
+        - docker
+      with_items:
+        - python-requests
+        - python-requestsexceptions
+        - python-docker
+
+    - name: install conversion libs
+      package: 
+        name: "{{ item }}"
+      tags:
+        - libs
+      with_items:
+        - libreoffice
+        - libtiff-tools
+        - ghostscript
+
+    - name: install various packages
+      package: 
+        name: "{{ item }}"
+      tags:
+        - packages
+      with_items:
+        - s3cmd
+        - ngrok-client
+
+    - name: install postgresql packages
+      package:
+        name: "{{ item }}"
+      tags:
+        - postgres
+      with_items:
+        - postgresql
+        - postgresql-client
+
+    - name: install mysql packages
+      package:
+        name: "{{ item }}"
+      tags:
+        - mysql
+      with_items:
+        - mysql-server
+        - python-mysqldb
+        - mysql-client
+
+    - name: install pt command line
+      shell: pip install git+https://github.com/egis/papertrail-python-cli.git
+      tags:
+        - pt

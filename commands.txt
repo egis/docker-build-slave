@@ -1,0 +1,11 @@
+docker build ./ -t egis/docker-build-slave:latest
+
+docker build ./ -t egis/docker-build-slave:latest --ulimit nofile=1048576:1048576
+
+docker run -d -i --privileged --name=build-slave egis/docker-build-slave
+
+docker exec -ti build-slave /bin/bash
+
+docker stop build-slave
+
+docker rm build-slave

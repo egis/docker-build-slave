@@ -1,0 +1,24 @@
+- hosts:  all
+  become: yes
+
+  tasks:
+
+    - name: start docker service
+      service:
+        name: docker
+        state: started
+      tags:
+        - docker
+
+    - name: pull docker images
+      docker_image:
+        name: "{{ item }}"
+      tags:
+        - docker
+      with_items:
+        - egis/docker-papertrail-postgres
+        - egis/docker-papertrail-mysql
+        - java:7
+        - java:8
+        - postgres:9.3
+

@@ -10,6 +10,12 @@
       tags:
         - docker
 
+    - name: login into docker hub
+      docker_login:
+        username: "{{ lookup('env', 'LOGIN') }}"
+        password: "{{ lookup('env', 'PASSWORD') }}"
+        email: "{{ lookup('env', 'EMAIL') }}"
+
     - name: pull docker images
       docker_image:
         name: "{{ item }}"

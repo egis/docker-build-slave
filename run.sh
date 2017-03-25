@@ -9,7 +9,6 @@ Usage: run.sh --name NAME
 --port PORT
 --data DATA_PATH
 --mem MB
-<<<<<<< HEAD
 --docker-login LOGIN
 --docker-password PASSWORD
 --docker-email EMAIL

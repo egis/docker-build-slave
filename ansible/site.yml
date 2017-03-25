@@ -163,3 +163,8 @@
       shell: pip install git+https://github.com/egis/papertrail-python-cli.git
       tags:
         - pt
+
+    - name: install pt command line for python 2.7
+      shell: pip2.7 install git+https://github.com/egis/papertrail-python-cli.git
+      tags:
+        - pt

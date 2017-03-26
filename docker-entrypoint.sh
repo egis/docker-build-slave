@@ -14,9 +14,6 @@ trap 'shutdown' 15
 
 service docker start
 
-##cd /opt/ansible
-##ansible-playbook docker-pull.yml -c local
-
 # wait forever
 while true
 do

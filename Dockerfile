@@ -36,7 +36,7 @@ WORKDIR /opt/ansible
 # ssh in to localhost.
 RUN ansible-playbook site.yml -c local 
 
-ADD start.sh /opt/
+ADD docker-entrypoint.sh /opt/
 WORKDIR /opt
-CMD ["/opt/start.sh"]
+CMD ["/opt/docker-entrypoint.sh"]
 

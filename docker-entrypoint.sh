@@ -3,6 +3,8 @@
 shutdown() {
   echo "Shutdown ..."
   service docker stop
+  service mysql stop
+  service postgresql stop
 }
 
 #Catch signal when 'docker stop' command is issued
@@ -13,6 +15,8 @@ trap 'shutdown' 15
 
 
 service docker start
+service mysql start
+service postgresql start
 
 # wait forever
 while true

@@ -41,7 +41,12 @@
       with_items:
         - node-gyp
         - webdriver-manager
-
+        - gulp
+        - rollup
+        - bower
+        - node-sass
+        - karma
+       
     - name: install glue-sprite
       package: 
         name: glue-sprite 
@@ -74,11 +79,7 @@
         state: present
       tags:
         - docker
-      with_items:
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - software-properties-common
+
 
     - name: add docker apt key
       apt_key:
@@ -137,6 +138,10 @@
       tags:
         - packages
       with_items:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
         - s3cmd
         - ngrok-client
         - zsh

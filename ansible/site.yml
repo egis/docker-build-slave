@@ -139,6 +139,9 @@
       with_items:
         - s3cmd
         - ngrok-client
+        - zsh
+        - nano
+        - wget
 
     - name: install postgresql packages
       package:

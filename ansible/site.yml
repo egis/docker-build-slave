@@ -147,6 +147,7 @@
         - zsh
         - nano
         - wget
+        - ant
 
     - name: install postgresql packages
       package:

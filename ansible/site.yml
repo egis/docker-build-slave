@@ -12,6 +12,9 @@
         update_cache: yes
       tags:
         - gradle
+        - minimal
+        - latest
+        - full
 
     - name: install gradle
       package: 
@@ -19,18 +22,27 @@
         state: present
       tags:
         - gradle
+        - minimal
+        - latest
+        - full
 
     - name: install node repo
       shell: curl -sL https://deb.nodesource.com/setup_{{ node_ver }}.x | sudo -E bash -
       tags: 
         - node
+        - minimal
+        - latest
+        - full
    
     - name: install nodejs
       package: 
         name: nodejs 
         state: present
       tags: 
-         - node
+        - node
+        - minimal
+        - latest
+        - full
 
     - name: Install node.js packages globally
       npm:
@@ -38,6 +50,9 @@
         global: yes
       tags:
         - node
+        - minimal
+        - latest
+        - full
       with_items:
         - node-gyp
         - webdriver-manager
@@ -53,6 +68,9 @@
         state: present
       tags:
         - glue
+        - minimal
+        - latest
+        - full
 
     - name: install packages for glue-sprite
       package: 
@@ -60,6 +78,9 @@
         state: present
       tags:
         - glue
+        - minimal
+        - latest
+        - full
       with_items:
         - python-dev
         - python-setuptools
@@ -72,14 +93,9 @@
       shell: pip install --upgrade pip; pip install glue; pip3 install --upgrade pip; pip3 install glue
       tags:
         - glue
-
-    - name: install packages for docker
-      package:
-        name: "{{ item }}"
-        state: present
-      tags:
-        - docker
-
+        - minimal
+        - latest
+        - full
 
     - name: add docker apt key
       apt_key:
@@ -87,6 +103,9 @@
         state: present
       tags:
         - docker
+        - minimal
+        - latest
+        - full
 
     - name: add docker apt repository
       apt_repository:
@@ -96,6 +115,9 @@
         update_cache: yes
       tags:
         - docker
+        - minimal
+        - latest
+        - full
 
     - name: install docker
       package:
@@ -103,13 +125,9 @@
         state: present
       tags:
         - docker
-
-    - name: make sure ~/.docker directory is present
-      file:
-        path: /root/.docker
-        state: directory
-      tags:
-        - docker
+        - minimal
+        - latest
+        - full
 
     - name: install python packages for docker
       package: 
@@ -117,6 +135,9 @@
         state: installed
       tags:
         - docker
+        - minimal
+        - latest
+        - full
       with_items:
         - python-requests
         - python-requestsexceptions
@@ -127,6 +148,7 @@
         name: "{{ item }}"
       tags:
         - libs
+        - full
       with_items:
         - libreoffice
         - libtiff-tools
@@ -137,6 +159,9 @@
         name: "{{ item }}"
       tags:
         - packages
+        - minimal
+        - latest
+        - full
       with_items:
         - apt-transport-https
         - ca-certificates
@@ -154,6 +179,8 @@
         name: "{{ item }}"
       tags:
         - postgres
+        - db
+        - full
       with_items:
         - postgresql
         - postgresql-client
@@ -163,6 +190,8 @@
         name: "{{ item }}"
       tags:
         - mysql
+        - db
+        - full
       with_items:
         - mysql-server
         - python-mysqldb
@@ -172,8 +201,14 @@
       shell: pip install git+https://github.com/egis/papertrail-python-cli.git
       tags:
         - pt
+        - minimal
+        - latest
+        - full
 
     - name: install pt command line for python 2.7
       shell: pip2.7 install git+https://github.com/egis/papertrail-python-cli.git
       tags:
         - pt
+        - minimal
+        - latest
+        - full

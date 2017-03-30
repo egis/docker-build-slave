@@ -73,14 +73,6 @@
       tags:
         - glue
 
-    - name: install packages for docker
-      package:
-        name: "{{ item }}"
-        state: present
-      tags:
-        - docker
-
-
     - name: add docker apt key
       apt_key:
         url: "https://download.docker.com/linux/ubuntu/gpg"

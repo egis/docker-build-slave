@@ -177,3 +177,8 @@
       shell: pip2.7 install git+https://github.com/egis/papertrail-python-cli.git
       tags:
         - pt
+
+    - name: download codacy coverage reporter
+          shell: wget -cv https://github.com/codacy/codacy-coverage-reporter/releases/download/1.0.13/codacy-coverage-reporter-assembly-1.0.5.jar
+          tags:
+            - codacy

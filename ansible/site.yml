@@ -7,7 +7,7 @@
   tasks:
 
     - name: add gradle ppa
-      apt_repository: 
+      apt_repository:
         repo: 'ppa:cwchien/gradle'
         update_cache: yes
       tags:
@@ -17,8 +17,8 @@
         - full
 
     - name: install gradle
-      package: 
-        name: gradle 
+      package:
+        name: gradle
         state: present
       tags:
         - gradle
@@ -28,21 +28,22 @@
 
     - name: install node repo
       shell: curl -sL https://deb.nodesource.com/setup_{{ node_ver }}.x | sudo -E bash -
-      tags: 
+      tags:
         - node
         - minimal
         - latest
         - full
-   
+
     - name: install nodejs
-      package: 
-        name: nodejs 
+      package:
+        name: nodejs
         state: present
       tags: 
         - node
         - minimal
         - latest
         - full
+
 
     - name: Install node.js packages globally
       npm:
@@ -61,41 +62,6 @@
         - bower
         - node-sass
         - karma
-       
-    - name: install glue-sprite
-      package: 
-        name: glue-sprite 
-        state: present
-      tags:
-        - glue
-        - minimal
-        - latest
-        - full
-
-    - name: install packages for glue-sprite
-      package: 
-        name: "{{ item }}"
-        state: present
-      tags:
-        - glue
-        - minimal
-        - latest
-        - full
-      with_items:
-        - python-dev
-        - python-setuptools
-        - python-pip
-        - python3-dev
-        - python3-setuptools
-        - python3-pip
-
-    - name: install pip packages for glue-sprite
-      shell: pip install --upgrade pip; pip install glue; pip3 install --upgrade pip; pip3 install glue
-      tags:
-        - glue
-        - minimal
-        - latest
-        - full
 
     - name: add docker apt key
       apt_key:
@@ -130,7 +96,7 @@
         - full
 
     - name: install python packages for docker
-      package: 
+      package:
         name: "{{ item }}"
         state: installed
       tags:
@@ -144,7 +110,7 @@
         - python-docker
 
     - name: install conversion libs
-      package: 
+      package:
         name: "{{ item }}"
       tags:
         - libs
@@ -155,7 +121,7 @@
         - ghostscript
 
     - name: install various packages
-      package: 
+      package:
         name: "{{ item }}"
       tags:
         - packages
@@ -212,3 +178,11 @@
         - minimal
         - latest
         - full
+
+    - name: download codacy coverage reporter
+      get_url:
+        url: https://oss.sonatype.org/service/local/repositories/releases/content/com/codacy/codacy-coverage-reporter/2.0.0/codacy-coverage-reporter-2.0.0-assembly.jar
+        dest: /opt/codacy
+        force_basic_auth: yes
+      tags:
+        - codacy

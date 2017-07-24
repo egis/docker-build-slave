@@ -6,54 +6,93 @@
 
   tasks:
 
-    - name: add gradle ppa
+    - name: install system packages
+      package:
+        name: "{{ item }}"
+      with_items:
+        - ca-certificates
+        - ghostscript
+        - locales
+        - openssh-client
+        - tar
+        - gzip
+        - parallel
+        - net-tools
+        - netcat
+        - unzip
+        - zip
+        - bzip2
+      tags:
+        - system-packages
+
+
+    - name: add ppa's
       apt_repository:
-        repo: 'ppa:cwchien/gradle'
-        update_cache: yes
+        repo: "{{ item }}"
+      with_items:
+        - ppa:cwchien/gradle
+        - ppa:webupd8team/java
       tags:
-        - gradle
-        - minimal
-        - latest
-        - full
+        - system-packages
 
-    - name: install gradle
-      package:
-        name: gradle
+    - name: add docker apt key
+      apt_key:
+        url: "{{ item }}"
         state: present
+      with_items:
+        - https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
+        - https://download.docker.com/linux/ubuntu/gpg
       tags:
-        - gradle
-        - minimal
-        - latest
-        - full
+        - system-packages
 
-    - name: install node repo
-      shell: curl -sL https://deb.nodesource.com/setup_{{ node_ver }}.x | sudo -E bash -
-      tags:
-        - node
-        - minimal
-        - latest
-        - full
 
-    - name: install nodejs
-      package:
-        name: nodejs
+    - name: add docker apt repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
+        filename: 'docker-stable'
+      tags:
+        - system-packages
+
+
+    - name: add nodejs repository
+      shell: "curl -sL https://deb.nodesource.com/setup_{{node_ver}}.x | sudo -E bash -"
+      tags:
+        - system-packages
+
+    - name: accept java license
+      shell: echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
       tags: 
-        - node
-        - minimal
-        - latest
-        - full
+          - java
+          
+    - name: install java
+      package:
+        name: oracle-java8-installer
+      tags:
+          - java
+
+
+    - name: install build packages
+      package:
+        name: "{{ item }}"
+        update_cache: true
+      with_items:
+        - nodejs
+        - gradle
+        - ant
+        - s3cmd
+        - ngrok-client
+        - zsh
+        - ant
+        - python-requests
+        - python-requestsexceptions
+        - python-docker
 
 
     - name: Install node.js packages globally
       npm:
         name: "{{ item }}"
         global: yes
-      tags:
-        - node
-        - minimal
-        - latest
-        - full
       with_items:
         - node-gyp
         - webdriver-manager
@@ -63,121 +102,14 @@
         - node-sass
         - karma
 
-    - name: add docker apt key
-      apt_key:
-        url: "https://download.docker.com/linux/ubuntu/gpg"
-        state: present
-      tags:
-        - docker
-        - minimal
-        - latest
-        - full
 
-    - name: add docker apt repository
-      apt_repository:
-        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
-        state: present
-        filename: 'docker-stable'
-        update_cache: yes
-      tags:
-        - docker
-        - minimal
-        - latest
-        - full
-
-    - name: install docker
-      package:
-        name: docker-ce
-        state: present
-      tags:
-        - docker
-        - minimal
-        - latest
-        - full
-
-    - name: install python packages for docker
-      package:
+    - name: Install pip packages
+      pip:
         name: "{{ item }}"
-        state: installed
-      tags:
-        - docker
-        - minimal
-        - latest
-        - full
-      with_items:
-        - python-requests
-        - python-requestsexceptions
-        - python-docker
-
-    - name: install conversion libs
-      package:
-        name: "{{ item }}"
-      tags:
-        - libs
-        - full
-      with_items:
-        - libreoffice
-        - libtiff-tools
-        - ghostscript
-
-    - name: install various packages
-      package:
-        name: "{{ item }}"
-      tags:
-        - packages
-        - minimal
-        - latest
-        - full
-      with_items:
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - software-properties-common
-        - s3cmd
-        - ngrok-client
-        - zsh
-        - nano
-        - wget
-        - ant
-
-    - name: install postgresql packages
-      package:
-        name: "{{ item }}"
-      tags:
-        - postgres
-        - db
-        - full
-      with_items:
-        - postgresql
-        - postgresql-client
-
-    - name: install mysql packages
-      package:
-        name: "{{ item }}"
-      tags:
-        - mysql
-        - db
-        - full
-      with_items:
-        - mysql-server
-        - python-mysqldb
-        - mysql-client
-
-    - name: install pt command line
-      shell: pip install git+https://github.com/egis/papertrail-python-cli.git
-      tags:
-        - pt
-        - minimal
-        - latest
-        - full
-
-    - name: install pt command line for python 2.7
-      shell: pip2.7 install git+https://github.com/egis/papertrail-python-cli.git
-      tags:
-        - pt
-        - minimal
-        - latest
-        - full
+        with_items:
+          - papertrail-cli
+          - httpie
+          - jq
 
     - name: download codacy coverage reporter
       get_url:

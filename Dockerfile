@@ -12,6 +12,7 @@ RUN apt-get update && \
   apt-add-repository ppa:ansible/ansible && \
   apt-get update && \
   apt-get install -y ansible
+  pip install papertrail-cli
 
 RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
 

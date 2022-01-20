@@ -7,7 +7,7 @@ RUN echo 'APT::Get::Assume-Yes "true";' > /etc/apt/apt.conf.d/90circleci \
   && echo 'DPkg::Options "--force-confnew";' >> /etc/apt/apt.conf.d/90circleci
 
 RUN apt-get update && \
-  apt-get install python-software-properties software-properties-common apt-transport-https \
+  apt-get install software-properties-common apt-transport-https \
                   build-essential curl wget git sudo -q -y && \
   apt-add-repository ppa:ansible/ansible && \
   apt-get update && \

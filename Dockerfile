@@ -11,7 +11,7 @@ RUN apt-get update && \
                   build-essential curl wget git sudo -q -y && \
   apt-add-repository ppa:ansible/ansible && \
   apt-get update && \
-  apt-get install -y ansible
+  apt-get install -y ansible && \
   apt-get install openjdk-8-jdk
 
 RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts

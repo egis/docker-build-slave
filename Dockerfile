@@ -25,7 +25,7 @@ RUN ansible-playbook site.yml -c local -t java
 RUN locale-gen en_US en_US.UTF-8 && dpkg-reconfigure locales
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
-ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
 CMD ["/bin/zsh"]
 

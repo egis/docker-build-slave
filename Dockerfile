@@ -12,7 +12,7 @@ RUN apt-get update && \
   apt-add-repository ppa:ansible/ansible && \
   apt-get update && \
   apt-get install -y ansible
-  apt install openjdk-8-jdk
+  apt-get install openjdk-8-jdk
 
 RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
 

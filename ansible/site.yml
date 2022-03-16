@@ -31,7 +31,6 @@
         repo: "{{ item }}"
       with_items:
         - ppa:cwchien/gradle
-        - ppa:webupd8team/java
       tags:
         - system-packages
 
@@ -59,17 +58,6 @@
       shell: "curl -sL https://deb.nodesource.com/setup_{{node_ver}}.x | sudo -E bash -"
       tags:
         - system-packages
-
-    - name: accept java license
-      shell: echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-      tags: 
-          - java
-          
-    - name: install java
-      package:
-        name: oracle-java8-installer
-      tags:
-          - java
 
 
     - name: install build packages

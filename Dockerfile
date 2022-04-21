@@ -16,7 +16,10 @@ RUN apt-get update && \
   apt-get install jq && \
   curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && \
   sudo apt install nodejs && \
-  sudo apt install awscli -y
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+  unzip awscliv2.zip && \
+  sudo ./aws/install && \
+  aws --version
 
 RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
 

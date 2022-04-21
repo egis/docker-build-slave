@@ -15,7 +15,8 @@ RUN apt-get update && \
   apt-get install openjdk-8-jdk && \
   apt-get install jq && \
   curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && \
-  sudo apt install nodejs
+  sudo apt install nodejs && \
+  sudo apt install awscli -y
 
 RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
 

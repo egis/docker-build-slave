@@ -22,10 +22,6 @@ RUN apt-get update && \
   sudo unzip awscliv2.zip && \
   sudo ./aws/install && \
   sudo aws --version && \
-  sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash && \
-  source ~/.bashrc && \
-  sudo nvm install 16 && \
-  sudo nvm use 16 && \
   sudo npm install -g yarn && \
   sudo yarn config set cache-folder ~/.cache/yarn && \
   sudo yarn global add yarn-retry && \

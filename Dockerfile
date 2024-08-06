@@ -23,6 +23,7 @@ RUN apt-get update && \
   sudo unzip awscliv2.zip && \
   sudo ./aws/install && \
   sudo aws --version && \
+  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin && \
   sudo npm install -g yarn && \
   sudo yarn config set cache-folder ~/.cache/yarn && \
   sudo yarn global add yarn-retry

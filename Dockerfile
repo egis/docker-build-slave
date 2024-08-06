@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -15,12 +15,23 @@ RUN apt-get update && \
   apt-get install openjdk-8-jdk && \
   apt-get install jq && \
   apt-get install unzip && \
+  apt-get install postgresql-client && \
   curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - && \
   sudo apt install nodejs && \
   sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
   sudo unzip awscliv2.zip && \
   sudo ./aws/install && \
-  aws --version
+  sudo aws --version && \
+  sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash && \
+  sudo export NVM_DIR="$HOME/.nvm" && \
+  sudo [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
+  sudo [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \
+  sudo nvm install 16 && \
+  sudo nvm use 16 && \
+  sudo npm install -g yarn && \
+  sudo yarn config set cache-folder ~/.cache/yarn && \
+  sudo yarn global add yarn-retry && \
+  sudo ./aws/install \
 
 RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
 

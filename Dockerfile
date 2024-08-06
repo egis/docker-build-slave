@@ -24,8 +24,7 @@ RUN apt-get update && \
   sudo aws --version && \
   sudo npm install -g yarn && \
   sudo yarn config set cache-folder ~/.cache/yarn && \
-  sudo yarn global add yarn-retry && \
-  sudo ./aws/install
+  sudo yarn global add yarn-retry
 
 RUN echo '[local]\nlocalhost\n' > /etc/ansible/hosts
 

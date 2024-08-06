@@ -23,7 +23,7 @@ RUN apt-get update && \
   sudo ./aws/install && \
   sudo aws --version && \
   sudo curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash && \
-  sudo export NVM_DIR="$HOME/.nvm" && \
+  sudo setenv NVM_DIR="$HOME/.nvm" && \
   sudo [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
   sudo [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" && \
   sudo nvm install 16 && \
